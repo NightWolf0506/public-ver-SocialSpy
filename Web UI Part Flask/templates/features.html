@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/static/features_style.css">
+
+    <title>Social Spy Features</title>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <a href="/" class="logo">
+            S<img src="/static/logo.png" alt="Logo" class="logo-image">cial Spy
+        </a>
+        <ul class="nav">
+            <li><a href="/"><b> Home </b></a></li>
+            
+
+        </ul>
+    </div>
+    <div class="header-right">
+        
+        <a href="#" class="icon-light" onclick="toggleLightDark();"><i class="bi bi-sun-fill"></i></a>
+        <a href="#" class="icon-dark" onclick="toggleLightDark();"><i class="bi bi-moon-fill"></i></a>
+
+    </div>
+</header>
+<div class="gallery">
+    <h2 class="platforms-heading">FEATURES</h2>
+</div>
+<div class="banner">
+    <div class="content">
+        <ul class="features-list">
+            <li> <h3>Selective Screenshot Based Report:</h3> <b> Automatically captures and documents key sections of a social media account, including posts, messages, and profiles, generating comprehensive reports with screenshots for investigation.</b></li>
+            <li> <h3>OCR Filtering for Posts and Messages:</h3><b> Utilizes Optical Character Recognition (OCR) technology to extract text from images (e.g., screenshots of posts or messages), ensuring that all content, including embedded text, is captured for analysis.</b></li>
+            <li> <h3>Automatic Summary Generation:</h3> <b>Automatically compiles a summary of extracted social media data, highlighting key activities such as frequent contacts, message volumes, and significant posts, for quick and efficient analysis.</b></li>
+            <li> <h3>Search for a Person of Interest:</h3> <b>Allows investigators to search for mentions of specific individuals (e.g., tagged users or frequent contacts) within the parsed social media data, aiding in connecting suspects to key individuals.</b></li>
+            <li> <h3>Multi-Social Platform Automation at Same Time:</h3><b> Enables simultaneous data extraction from multiple social media platforms (e.g., Facebook, Instagram, Twitter, WhatsApp, etc.), streamlining the investigative process across various channels.</b></li>
+            <li> <h3>Frequent Contacted Friend Posts Capture:</h3><b> Analyzes message data to identify frequently contacted individuals or recurring names in posts, helping investigators trace relationships and connections between suspects and others.</b></li>
+        </ul>
+
+       
+    </div>
+</div>
+
+
+    <script src="/static/main.js"></script>
+    <script>
+        function toggleLightDark() {
+    const liElements = document.querySelectorAll('.banner .content .features-list li');
+    const iconLight = document.querySelector('.icon-light');
+    const iconDark = document.querySelector('.icon-dark');
+
+    // Toggle between light and dark mode by checking the current theme
+    if (document.body.classList.contains('light-mode')) {
+        document.body.classList.remove('light-mode');
+        iconLight.style.display = 'block';
+        iconDark.style.display = 'none';
+        
+        // Change the li color for dark mode
+        liElements.forEach(li => {
+            li.style.color = 'white'; // Dark mode color
+        });
+    } else {
+        document.body.classList.add('light-mode');
+        iconLight.style.display = 'none';
+        iconDark.style.display = 'block';
+        
+        // Change the li color for light mode
+        liElements.forEach(li => {
+            li.style.color = 'black'; // Light mode color
+        });
+    }
+}
+
+    </script>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./css/features_style.css">
+
+    <title>Social Spy Help</title>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <a href="/" class="logo">
+            S<img src="/images/logo.png" alt="Logo" class="logo-image">cial Spy
+        </a>
+        <ul class="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="report.html">Report</a></li>
+            <li><a href="review_summary.html">Review Summary</a></li>
+            <li><a href="help.html">Help</a></li>
+
+        </ul>
+    </div>
+    <div class="header-right">
+        <a href="#" class="signin">Sign in</a>
+        <a href="#" class="icon-light" onclick="toggleLightDark();"><i class="bi bi-sun-fill"></i></a>
+        <a href="#" class="icon-dark" onclick="toggleLightDark();"><i class="bi bi-moon-fill"></i></a>
+
+    </div>
+</header>
+<div class="banner">
+    <div class="content">
+
+
+        
+        <div class="button">
+            <a href="#" class="btn-left">Get Started</a>
+            <a href="#" class="btn-right">Learn More</a>
+        </div>
+    </div>
+    <div class="gallery">
+        <h2 class="platforms-heading">HELP & SUPPORT</h2>
+    </div>
+    <div class="link">
+        <a href="#" class="chat" onclick="openChatPopup();"><i class="bi bi-chat-left-quote"></i></a>
+        <p>Type your queries...</p>
+    </div>
+
+    <!-- Chat Popup -->
+    <div id="chat-popup" class="chat-popup">
+        <div class="message-container" id="message-container">
+            <!-- Messages will be dynamically added here -->
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <button onclick="closeChatPopup()" class="close-btn">X</button>
+    </div>
+    <div class="popup-button-container">
+        <button id="popup-button" class="popup-button">
+            <i class="bi bi-list"></i> <!-- Hamburger Icon from Bootstrap Icons -->
+        </button>
+        <!-- Popup menu with close button and options -->
+        <div id="popup-menu" class="popup-menu">
+            <button id="close-button" class="close-button">
+                <i class="bi bi-x-lg"></i> <!-- Cross icon from Bootstrap Icons -->
+            </button>
+            <ul class="popup-options">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="report.html">Report</a></li>
+                <li><a href="review_summary.html">Review Summary</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+</div>
+</body>
+</html>
+

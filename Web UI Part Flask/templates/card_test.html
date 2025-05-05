@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/static/card.css">
+    <title>PDF Generator</title>
+    <style>
+        #generatePdf:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        #popupOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        #pdfPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="lines"></div>
+        <div class="imgBx">
+            <img src="/static/Clipped_image_20230529_200641_remastered.png" alt="">
+        </div>
+        <div class="content">
+            <div class="details">
+                <div>
+                    <h2>NightWolf <br> <span>nightwolf@gmail.com</span></h2>
+                </div>
+                <div class="terminal" id="terminal">
+                    <!-- Terminal messages will be displayed here -->
+                </div>
+                <div class="actionBtn">
+                    <button id="generatePdf" disabled>
+                        <i class="bi bi-file-earmark-arrow-down"></i> Generate PDF
+                    </button>
+                    <button id="changeAccount"><i class="bi bi-person-circle"></i> Change Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popupOverlay" class="popup-overlay"></div>
+    <div id="pdfPopup">
+        <h3>Select or Add Features</h3>
+        <form id="popupForm">
+            <div class="form-item">
+                <input type="checkbox" id="filterCheckbox" name="filter">
+                <label for="filterCheckbox"><i class="bi bi-filter"></i> Filter</label>
+            </div>
+            <div id="filterInputContainer" style="display: none;">
+                <label for="filterText">Enter Filter:</label>
+                <input type="text" id="filterText" name="filterText">
+            </div>
+            <div class="form-item">
+                <input type="checkbox" id="summaryCheckbox" name="summary">
+                <label for="summaryCheckbox"><i class="bi bi-card-text"></i> Summary</label>
+            </div>
+            <button type="button" id="confirmButton"><i class="bi bi-check-circle"></i> Confirm</button>
+        </form>
+    </div>
+
+    <script>
+        let isScrapingStarted = false; // Flag to track if scraping has already started
+        let eventSource = null; // Declare the EventSource variable globally
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const terminal = document.getElementById("terminal");
+            const generatePdfButton = document.getElementById("generatePdf");
+            const popupOverlay = document.getElementById("popupOverlay");
+            const pdfPopup = document.getElementById("pdfPopup");
+            const filterCheckbox = document.getElementById("filterCheckbox");
+            const filterInputContainer = document.getElementById("filterInputContainer");
+            const filterTextInput = document.getElementById("filterText");
+            const summaryCheckbox = document.getElementById("summaryCheckbox");
+            const confirmButton = document.getElementById("confirmButton");
+
+            const username = localStorage.getItem("username");
+            const password = localStorage.getItem("password");
+            const platform = localStorage.getItem("platform") || "Instagram";
+
+            if (!username || !password) {
+                terminal.textContent = "Missing username or password.";
+                return;
+            }
+
+            // Ensure scraping is only started once
+            if (isScrapingStarted) {
+                console.log("Scraping is already in progress.");
+                return;
+            }
+            isScrapingStarted = true;
+
+            // Initialize EventSource for progress streaming
+            if (!eventSource || eventSource.readyState === EventSource.CLOSED) {
+                // Close any existing EventSource before initializing a new one
+                if (eventSource) {
+                    eventSource.close();
+                    console.log("Closed existing EventSource.");
+                }
+
+                console.log("Initializing EventSource...");
+                eventSource = new EventSource(`/scrape-progress/${platform}?username=${username}&password=${password}`);
+
+                // Handle incoming messages
+                eventSource.onmessage = (event) => {
+                    const message = event.data;
+                    console.log("Message received:", message);
+
+                    // Display messages in the terminal
+                    const p = document.createElement("p");
+                    p.textContent = message;
+                    terminal.appendChild(p);
+                    terminal.scrollTop = terminal.scrollHeight;
+
+                    if (message === "Scraping complete!") {
+                        eventSource.close();
+                        console.log("Scraping complete, EventSource closed.");
+                        enablePdfDownload(username);
+                        isScrapingStarted = false; // Reset flag
+                    }
+                };
+
+                // Handle errors
+                eventSource.onerror = () => {
+                    terminal.innerHTML += `<p style="color: red;">Error: Failed to connect to the server. Please check your internet connection or try again later.</p>`;
+                    eventSource.close();
+                    console.log("Error encountered, EventSource closed.");
+                    isScrapingStarted = false; // Reset flag
+                };
+            }
+
+            // Enable the PDF download button
+            function enablePdfDownload(username) {
+                generatePdfButton.disabled = false;
+                generatePdfButton.innerHTML = '<i class="bi bi-file-earmark-arrow-down"></i> Generate PDF';
+                generatePdfButton.addEventListener("click", openPopup);
+            }
+
+            // Open the popup for PDF options
+            function openPopup() {
+                popupOverlay.style.display = "block";
+                pdfPopup.style.display = "block";
+            }
+
+            // Close the popup
+            function closePopup() {
+                popupOverlay.style.display = "none";
+                pdfPopup.style.display = "none";
+            }
+
+            popupOverlay.addEventListener("click", closePopup);
+
+            // Show or hide filter input field
+            filterCheckbox.addEventListener("change", () => {
+                filterInputContainer.style.display = filterCheckbox.checked ? "block" : "none";
+            });
+
+            // Confirm button logic for PDF generation
+            confirmButton.addEventListener("click", async () => {
+                const filter = filterCheckbox.checked ? filterTextInput.value : null;
+                const summary = summaryCheckbox.checked;
+
+                closePopup();
+
+                terminal.innerHTML += `<p style="color: blue;">Generating PDF, please wait...</p>`;
+                generatePdfButton.disabled = true;
+                generatePdfButton.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating...';
+
+                try {
+                    const response = await fetch(`/generate-pdf/${platform}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ username, filter, summary }),
+                    });
+
+                    if (!response.ok) {
+                        const error = await response.json();
+                        terminal.innerHTML += `<p style="color: red;">Error: ${error.error || 'Unknown error during PDF generation'}</p>`;
+                        generatePdfButton.disabled = false;
+                        generatePdfButton.innerHTML = '<i class="bi bi-file-earmark-arrow-down"></i> Generate PDF';
+                        return;
+                    }
+
+                    const result = await response.json();
+                    if (result.success) {
+                        terminal.innerHTML += `<p style="color: green;">PDF successfully generated and ready for download!</p>`;
+                        generatePdfButton.innerHTML = '<i class="bi bi-file-earmark-arrow-down"></i> Download PDF';
+                        generatePdfButton.disabled = false;
+
+                        // Trigger the file download
+                        generatePdfButton.onclick = () => window.location.href = `/download/${result.filename}`;
+                    } else {
+                        terminal.innerHTML += `<p style="color: red;">Error: ${result.error}</p>`;
+                        generatePdfButton.disabled = false;
+                        generatePdfButton.innerHTML = '<i class="bi bi-file-earmark-arrow-down"></i> Generate PDF';
+                    }
+                } catch (error) {
+                    terminal.innerHTML += `<p style="color: red;">Error: ${error.message}</p>`;
+                    generatePdfButton.disabled = false;
+                    generatePdfButton.innerHTML = '<i class="bi bi-file-earmark-arrow-down"></i> Generate PDF';
+                }
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>

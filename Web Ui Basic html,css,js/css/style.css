@@ -1,0 +1,1132 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    
+
+}
+
+:root {
+    --dark: #19161f;
+    --light: #f3f3f3;
+    --primary: #fcb320;
+    --primaryHover: #ff8000;
+    --second: #0080ff;
+    --secondHover: #0051ff;
+}
+
+body{
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    background: var(--dark);
+    font-family: 'Roboto',sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    overflow:hidden;
+    transition: 1s;
+    
+    
+}
+
+body.light{
+    background: var(--light);
+}
+header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 100px;
+    z-index: 1000;
+    
+}
+
+.header-left,.header-right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:100px;
+}
+
+
+
+/* Header Left */
+
+
+.logo {
+    font-size: 3rem;
+    color: var(--light);
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 2px;
+    text-align: center;
+    display: inline-block;
+    margin-left: 15px; /* Space between image and text */
+}
+
+.logo-image {
+    width: 30px;  /* Adjust the width of the image */
+    height: auto;  /* Maintain aspect ratio */
+    margin-right: 5px;
+    
+     /* Add gap between image and text */
+}
+
+body.light .logo {
+    color: var(--dark);
+}
+
+.nav{
+    display: flex;
+    gap: 40px;
+
+}
+
+.nav li{
+    list-style: none;
+    margin:0 px;
+}
+
+.nav li a {
+    color:var(--light);
+    text-decoration: none;
+    font-weight: 400;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+body.light .nav li a{
+    color: var(--dark);
+}
+
+.nav li:hover a,body.light .nav li:hover a{
+    color:var(--primaryHover);
+}
+
+/* Header Right */
+.signin{
+    font-size:1rem;
+    color:var(--light);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 25px;
+    background: var(--primary);
+    border-radius: 30px 50px 0 30px;
+    transition: 0.3s;
+}
+
+.signin:hover{
+    background: var(--primaryHover);
+}
+
+.icon-light{
+    font-size: 1.6rem;
+    color: var(--light);
+}
+
+.icon-dark{
+    color: var(--dark);
+    font-size: 1.6rem;
+    display:none;
+}
+
+body.light .icon-light{
+    display:none;
+
+}
+body.light .icon-dark{
+    display:block;
+    
+}
+
+/* Banner */
+
+.banner{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding:  0 100px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.banner .content{
+    width: 50%;
+
+}
+
+.banner .content .title {
+    font-size: clamp(2rem, 3vw, 4rem); /* Scales between 2rem and 4rem based on viewport width */
+    color: var(--light);
+    margin-bottom: 20px;
+    transition: font-size 0.3s ease; /* Smooth transition for font-size */
+}
+
+.banner .content p {
+    font-size: clamp(1rem, 2.1vw, 1.2rem); /* Scales between 1rem and 1.2rem */
+    color: var(--light);
+    font-weight: 250;
+    letter-spacing: 1px;
+    margin-bottom: 50px;
+    transition: font-size 0.3s ease; /* Smooth transition for font-size */
+}
+
+body.light .banner .content .title{
+    color: var(--dark);
+}
+body.light .banner .content p{
+    color: var(--dark);
+}
+.banner .content .button a{
+    text-decoration: none;
+    color: var(--light);
+    padding:15px 20px;
+    transition: 0.3s;
+
+}
+
+.btn-left{
+    background:var(--primary);
+    border-radius:50px 30px 30px 0;
+    margin-right:20px;
+
+}
+
+.btn-left:hover{
+    background: var(--primaryHover);
+    
+}
+
+.btn-right{
+    background: var(--second);
+    border-radius: 30px 0 50px 30px;
+}
+
+.btn-right:hover{
+    background: var(--primaryHover);
+}
+
+
+/* Gallery */
+.banner .gallery{
+    width: 50%;
+    height: 100%;
+    padding: 100px;
+    
+
+}
+
+.gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    padding: 100px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.platforms-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    text-align: center;
+    background: linear-gradient(90deg, #f39c12, #e74c3c, #094fc8, #e74c3c, #19161f);
+    background-size: 200% 100%;
+    background-clip: text;
+    color: transparent;
+    animation: colorShift 3s ease-out infinite;
+    z-index: 9999;
+    
+    margin-bottom: 40px; /* Space between heading and ring */
+}
+
+/* Animated Gradient Effect */
+@keyframes colorShift {
+    0% {
+        background-position: -100% 0;
+    }
+    50% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+
+
+
+
+@keyframes move{
+    0%,
+    100%{
+        transform: translateY(0);
+    }
+    50%{
+        transform:translateY(100px);
+    }
+}
+
+@keyframes moveInverse {
+    0%,
+    100%{
+        transform: translateY(0);
+    }
+    50%{
+        transform:translateY(-100px);
+    }
+    
+}
+
+
+.ring {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        max-width: 600px; /* Maximum width of the ring */
+        aspect-ratio: 1 / 1; /* Maintain 1:1 aspect ratio */
+        
+        padding-top: 10%;
+    }
+    
+
+.container{
+    position:relative;
+    width:100%;
+    height:110%;
+    border:2px solid #fff;
+    border-radius:50%;
+}
+body.light .container{
+    border:2px solid #19161f
+}
+.container .icon{
+    position: relative;
+    left:-50%;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    cursor:pointer;
+
+}
+.container .icon .imgBx{
+    position: absolute;
+    width:15%;
+    height:15%;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: 0.5s;
+    border:1px solid #fff;
+    box-shadow: 0 0 0 4px #222,0 0 0 6px #fff;
+    transform: rotate(calc(360deg / 4 * var(--i)));
+    
+    z-index:100;
+   
+
+}
+
+body.light .icon .imgBx{
+    border:1px solid var(--dark);
+    box-shadow: 0 0 0 4px #fff,0 0 0 6px #222;
+
+}
+.container .icon .imgBx.active{
+    box-shadow: 0 0 0 6px #222,0 0 0 12px #ff1d50;
+
+}
+.container .icon .imgBx img{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    border-radius: 50%;
+    overflow: hidden;
+    transform: rotate(calc(-360deg/4 *var(--i)));
+    transition: 0.5s;
+    filter: grayscale(1);
+    
+}
+
+.container .icon .imgBx.active img{
+    filter:grayscale(0);
+}
+
+.contentn{
+    position:absolute;
+    inset:0;
+    overflow: hidden;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.contentn::before{
+    content: '';
+    position: absolute;
+    inset: clamp(10px, 10%, 60px);
+    border: 4px solid transparent;
+    border-left: 4px solid var(--border-before-color, #2196f3); 
+    border-right:  4px solid #fff;
+    border-radius: 50%;
+    animation: animte_01 5s linear infinite;
+    z-index:1;
+    pointer-events:none;
+    color:#962fbf
+}
+
+
+body.light .contentn::before{
+    border-right:  4px solid #222;
+}
+
+@keyframes animte_01 {
+0% {
+transform: rotate(0deg);
+}
+100% {
+transform: rotate(360deg);
+}
+}
+.contentn::after{
+    content: '';
+    position: absolute;
+    inset: clamp(0px, 20%, 120px);
+    border: 4px solid transparent;
+    border-left: 4px solid var(--border-after-color, #f32121);
+    border-right:  4px solid #fff;
+    border-radius: 50%;
+    animation: animte_02 2.5s linear infinite;
+    z-index:1;
+    pointer-events:none;
+}
+
+body.light .contentn::after{
+    border-right:  4px solid #222;
+}
+@keyframes animte_02 {
+0% {
+transform: rotate(360deg);
+}
+100% {
+transform: rotate(0deg);
+}
+}
+.contentBx{
+position: absolute;
+transform: scale(0);
+transition: 0.5s;
+opacity: 0;
+display:flex;
+justify-content: center;
+align-items: center;
+}
+.contentBx.active{
+transform: scale(1);
+opacity:1;
+transition-delay: 0.1s;
+
+}
+
+.contentBx .card{
+position:relative;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+gap:15px;
+}
+
+
+.contentBx .card .imgBx {
+    position: relative;
+    width: clamp(60px, 7vw, 150px); /* Adjusts between 100px and 150px based on viewport width */
+    height: clamp(60px, 7vw, 150px); /* Set a maximum height for larger screens */
+    border-radius: 10px;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.contentBx .card .imgBx img{
+position: absolute;
+top:0;
+left:0;
+width: 100%;
+height:100%;
+object-fit: cover;
+}
+.contentBx .card .textBx{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+.contentBx .card .textBx h2{
+position: relative;
+font-size: clamp(1rem, 1.1vw, 1.25rem);
+font-weight: 600;
+color: #fff;
+line-height:1em;
+text-transform:uppercase;
+text-align: center;
+}
+.contentBx .card .textBx h2 span{
+font-size: 0.65em;
+color: #fff;
+font-weight: 500;
+letter-spacing: 0.1em;
+
+}
+.textBx h2 {
+margin-bottom: 16px; /* Creates space below the heading */
+
+font-weight: 600;
+color: #fff;
+text-align: center;
+line-height: 1.2;
+}
+body.light .contentBx .card .textBx h2{
+    color:#222;
+}
+button.modern-btn {
+width: 100%;
+padding: 15px;
+font-size:clamp(1rem, 1.1vw, 1.25rem);
+font-weight: 600;
+text-transform: uppercase;
+color: #fff;
+background-color: #2196f3;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+body.light button.modern-btn{
+    color:#222;
+}
+
+
+/* Hover Effect */
+button.modern-btn:hover {
+background-color: #1976d2;
+box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+transform: scale(1.05);
+}
+
+/* Responsive Text */
+button.modern-btn:active {
+transform: scale(0.95);
+}
+
+/* Adjust for responsiveness */
+button.modern-btn {
+
+font-size: clamp(0.875rem, 2vw, 1.125rem); /* Dynamically adjusts based on viewport width */
+padding: clamp(10px, 1.5vw, 15px);
+padding-top: 10px;
+color: #fff;
+border-radius: 30px; /* Dynamically adjusts based on viewport width */
+}
+
+
+.link {
+    position: absolute;
+    left: 100px;
+    bottom: 100px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    z-index: 1000;
+}
+
+.link p {
+    color: #3e3d51;
+}
+
+/* Chat box styling */
+.chat {
+    padding: 25px;
+    background-color: #3e3d51;
+    color: #00f946;
+    font-size: 2rem;
+    border-radius: 50%;
+}
+
+/* Initially hidden chat popup */
+.chat-popup {
+    display: none;  /* Hidden by default */
+    position: fixed;
+    bottom: 10%;
+    left: 5%;
+    width: 50%;
+    height: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.5s ease, opacity 0.3s ease;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    max-width: 90%;
+    max-height: 80%;
+    opacity: 0;  /* Start with opacity 0 */
+    transform: translateY(20px); /* Start slightly off-screen */
+    z-index: 999999;
+}
+
+/* Show the chat popup with transition */
+.chat-popup.open {
+    display: flex;
+    opacity: 1;  /* Full opacity when the popup is shown */
+    transform: translateY(0);  /* Move the popup into view */
+}
+
+/* Hover effect for the link */
+.link a:hover {
+    background-color: #021931;
+}
+
+/* Chat messages styling */
+.message-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 10px;
+}
+
+.message {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    max-width: 70%;
+    word-wrap: break-word;  /* Ensures long words break */
+    white-space: normal;    /* Allows wrapping of text */
+}
+
+.message.bot {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-start;
+}
+
+.message.user {
+    background-color: #28a745;
+    color: white;
+    align-self: flex-end;
+}
+
+/* Input area */
+.input-container {
+    display: flex;
+    width: 100%;
+    padding-top: 10px;
+    gap: 20px;
+}
+
+.input-container input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 25px;
+    border: none;
+    word-wrap: break-word;  /* Ensures input text breaks if necessary */
+    white-space: normal;    /* Allows text to wrap */
+}
+
+.input-container button {
+    width: 20%;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Close button for the chat popup (top right) */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: rgb(255, 0, 0);
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+/* Ensure the close button is properly aligned */
+.close-btn i {
+    font-size: 24px;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .chat-popup {
+        width: 70%;
+        height: 60%;
+        bottom: 5%;
+    }
+
+    .message-container {
+        padding-right: 5px;
+    }
+
+    .input-container input {
+        width: 75%;
+    }
+
+    .input-container button {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .chat-popup {
+        width: 90%;
+        height: 70%;
+        bottom: 5%;
+    }
+
+    .input-container input {
+        width: 70%;
+    }
+
+    .input-container button {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 1276px) {
+    header {
+
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 0px 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        z-index: 1000;
+        /* Background added to prevent transparency */
+        box-sizing: border-box;
+    }
+    .nav {
+        display: none; /* Hide nav links */
+    }
+    .banner {
+        padding: 90px 20px 20px 20px; /* Adjusted padding */
+        height: auto;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow-y: auto; /* Enable vertical scroll if content overflows */
+        margin-top: 30px; /* Adjust margin to offset fixed header */
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .banner .content {
+        text-align: center; /* Center-align text inside content */
+        width: 90%; /* Reduce width for better spacing */
+    }
+
+    .banner .gallery {
+        width: 100%; /* Make gallery full-width */
+    }
+    .link {
+        bottom: 20px;
+        left: 20px;
+        flex-direction: column; /* Stack link content */
+        align-items: flex-start;
+        position: fixed;
+        z-index: 1000;
+    }
+    .link p{
+        display: none;
+
+    }
+    .popup-button-container .popup-button {
+        font-size:3.7rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Header */
+    header {
+
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        z-index: 1000;
+        /* Background added to prevent transparency */
+        box-sizing: border-box;
+    }
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: auto;
+    }
+    .logo-image {
+        width: 15px;  /* Adjust the width of the image */
+        height: auto;  /* Maintain aspect ratio */
+        margin-right: 5px;}
+        .logo {
+            font-size: 2rem;
+            color: var(--light);
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-align: center;
+            display: inline-block;
+            margin-left: 15px; /* Space between image and text */
+        }
+
+    .header-left,.header-right{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap:30px;
+    }
+
+    .nav {
+        display: none; /* Hide nav links */
+    }
+
+    .signin {
+        font-size: 0.9rem;
+        padding: 8px 18px;
+        
+    }
+
+    /* Banner */
+    .banner {
+        padding: 50px 20px 20px 20px; /* Adjusted padding */
+        height: auto;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow-y: auto; /* Enable vertical scroll if content overflows */
+        margin-top: 30px; /* Adjust margin to offset fixed header */
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    .banner .content {
+        width: 100%;
+        text-align: center;
+    }
+
+    .banner .content .title {
+        font-size: 2rem; /* Adjust title size */
+    }
+
+    .banner .content p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .banner .content .button a {
+        padding: 10px 15px;
+    }
+
+    /* Gallery */
+    .banner .gallery {
+        display: block; /* Set gallery to block for mobile */
+        width: 100%; /* Ensure gallery takes full width */
+        padding: 0;
+        margin-top: 20px; /* Ensure space from other content */
+        overflow: hidden; /* Prevent horizontal overflow */
+        box-sizing: border-box;
+    }
+    .platforms-heading {
+        font-size: 2.3rem; /* Adjust font size for smaller screens */
+        margin: 0 auto; /* Center the heading with auto margin */
+        width: 100%; 
+        padding-top: 10px;/* Ensure it takes full width */
+    }
+    .ring{
+    padding-top: 0%;
+    }
+    /* Chat icon */
+    .link {
+        bottom: 20px;
+        left: 20px;
+        flex-direction: column; /* Stack link content */
+        align-items: flex-start;
+        position: fixed;
+        z-index: 1000;
+    }
+    .link p{
+        display: none;
+
+    }
+
+    .chat {
+        font-size: 1.5rem;
+        padding: 10px;
+        background-color: #3e3d51;
+        color: #00f946;
+        border-radius: 50%;
+    }
+
+    .container{
+        height:280px;
+        width:280px;
+        padding-top: 0%;
+        
+    }
+
+    .container .icon .imgBx{
+        width:50px;
+        height:50px;
+        transform-origin: 165px;
+    }
+    .contentn::before{
+        inset:10px;
+    }
+    .contentn::after{
+        inset:120px;
+        display:none;
+    }
+    .contentBx .card .imgBx{
+        width: 80px;
+    height:80px;
+    }
+    button.modern-btn {
+        width: 60%;
+        padding: 15px;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    .contentBx .card .textBx h2 span{
+        font-size: 0.65em;
+        color: #fff;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        
+        }
+    .popup-button-container .popup-button
+        {
+            font-size: 24px;
+        }
+
+}
+
+/* Further adjustments for very small screens */
+@media (max-width: 480px) {
+    .header-left {
+        gap: 10px;
+    }
+    
+
+    .signin {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    .banner .content .title {
+        font-size: 1.5rem; /* Smaller title for very small screens */
+    }
+
+    .banner .content p {
+        font-size: 0.9rem;
+    }
+
+    .gallery .item {
+        width: 90%; /* Make items slightly larger on very small screens */
+    }
+
+    .gallery .item img {
+        width: 100%;
+    }
+
+}
+
+
+body {
+    max-width: 100%;
+    
+    box-sizing: border-box;
+}
+
+body.light {
+    background: var(--light);
+}
+
+/* Ensure scrolling on body if content exceeds the screen */
+body {
+    
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+
+
+@keyframes moveleft {
+    0%,
+    100% {
+        transform: translateX(0); /* Initially at the same position */
+    }
+    50% {
+        transform: translateX(100px); /* Move to the right at the midpoint */
+    }
+}
+
+@keyframes moveleftInverse {
+    0%,
+    100% {
+        transform: translateX(0); /* Initially at the same position */
+    }
+    50% {
+        transform: translateX(-100px); /* Move to the left at the midpoint */
+    }
+}
+
+
+
+
+/* circle ring */
+/* Default styles for the popup button container */
+.popup-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none; /* Initially hidden */
+    z-index: 100000; /* Ensure it's on top of everything */
+}
+
+/* Hamburger Icon Button Style */
+.popup-button {
+    padding: 10px;
+    background-color: #a5951b;
+    color: white;
+    border: none;
+    border-radius: 100%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Popup Menu (hidden by default) */
+.popup-menu {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%; /* Full screen width */
+    height: 100%; /* Full screen height */
+    background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+    color: white;
+    transform: translateY(100%); /* Initially hidden at the bottom */
+    transition: transform 0.5s ease-in-out;
+    z-index: 5; /* Behind the popup backdrop */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    overflow-y: auto;
+    backdrop-filter: blur(5px); /* Remove blur effect */
+}
+
+/* Active Popup Menu (shown from bottom to top) */
+.popup-menu.active {
+    transform: translateY(0); /* Move up when active */
+}
+
+/* Backdrop Overlay (behind the popup) */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    z-index: 4; /* Behind the popup menu */
+}
+
+/* Popup Options List */
+.popup-options {
+    list-style-type:circle;
+    padding: 0;
+    margin-top: 50px; /* Space from the top */
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; /* Even space between items */
+    height: calc(100% - 50px); /* Full height minus top margin */
+}
+
+/* Popup Option Item */
+.popup-options li {
+    margin: 15px 0;
+}
+
+/* Popup Option Links */
+.popup-options li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Subtle background for items */
+    border-radius: 5px;
+}
+.popup-options li a:hover {
+    background-color: var(--primaryHover);
+}
+/* Close Button Style at the Top-Right */
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Media Query for Mobile Screens */
+@media (max-width: 1276px) {
+    .popup-button-container {
+        display: block; /* Show button on small screens */
+    }
+
+}
+

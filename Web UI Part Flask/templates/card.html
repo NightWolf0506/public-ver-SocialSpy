@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Social Spy Progress</title>
+    <link rel="stylesheet" href="/static/card.css">
+</head>
+
+<body>
+    <div class="card">
+        <div class="lines"></div>
+        <div class="imgBx">
+            <img src="/static/Clipped_image_20230529_200641_remastered.png" alt="Social Spy Logo">
+        </div>
+        <div class="content">
+            <div class="details">
+                <div>
+                    <h2>Social Spy <br> <span>Instagram Scraping</span></h2>
+                </div>
+                <div class="loading-animation"></div>
+                <div class="terminal" id="terminal">
+                    <!-- Terminal messages will appear here -->
+                </div>
+                <div class="actionBtn">
+                    <!-- Initially, Generate PDF button is disabled -->
+                    <button id="generatePdf" disabled>
+                        <i class="bi bi-file-earmark-arrow-down"></i> Generate PDF
+                    </button>
+                    <button id="changeAccount">
+                        <i class="bi bi-person-circle"></i> Choose Another Platform
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const terminal = document.getElementById('terminal');
+            const generatePdfButton = document.getElementById("generatePdf");
+            const changeAccountButton = document.getElementById("changeAccount");
+
+            const username = localStorage.getItem('username');
+            const password = localStorage.getItem('password');
+            const platform = localStorage.getItem('platform') || "Instagram"; // Default to Instagram if not set
+
+            // Display error if credentials are missing
+            if (!username || !password) {
+                terminal.textContent = "Missing username or password.";
+                return;
+            }
+
+            // Connect to the Server-Sent Events (SSE) endpoint for updates
+            const eventSource = new EventSource(`/scrape-progress/${platform}?username=${username}&password=${password}`);
+
+            eventSource.onmessage = (event) => {
+                const message = event.data;
+
+                // Add the received message to the terminal
+                const p = document.createElement('p');
+                p.textContent = message;
+                p.style.textAlign = 'left';
+                terminal.appendChild(p);
+
+                // Auto-scroll the terminal to the latest message
+                terminal.scrollTop = terminal.scrollHeight;
+
+                // Enable the Generate PDF button when scraping is complete
+                if (message === "Scraping complete!") {
+                    eventSource.close(); // Close the SSE connection
+                    enablePdfDownload(username); // Enable PDF download functionality
+                }
+            };
+
+            eventSource.onerror = () => {
+                const errorMessage = "An error occurred while fetching updates.";
+                const p = document.createElement('p');
+                p.textContent = errorMessage;
+                p.style.color = 'red';
+                terminal.appendChild(p);
+                eventSource.close();
+            };
+
+            // Enable PDF Download functionality
+            function enablePdfDownload(username) {
+                generatePdfButton.disabled = false; // Enable the button
+                generatePdfButton.innerHTML = `<i class="bi bi-file-earmark-arrow-down"></i> Download PDF`;
+
+                generatePdfButton.addEventListener("click", async () => {
+                    const pdfFile = `${username}_Instagram_Report.pdf`;
+                    const downloadUrl = `/download/${platform}/${pdfFile}`;
+
+                    // Show a loading message while preparing the PDF
+                    const p = document.createElement('p');
+                    p.textContent = "Preparing PDF for download...";
+                    terminal.appendChild(p);
+
+                    try {
+                        // Check if the PDF file exists on the server before downloading
+                        const response = await fetch(downloadUrl, { method: 'HEAD' });
+                        if (response.ok) {
+                            // Redirect to the download URL
+                            window.location.href = downloadUrl;
+                        } else {
+                            throw new Error("PDF not found on the server.");
+                        }
+                    } catch (error) {
+                        const errorMessage = `Error: ${error.message}`;
+                        const p = document.createElement('p');
+                        p.textContent = errorMessage;
+                        p.style.color = 'red';
+                        terminal.appendChild(p);
+                    }
+                });
+            }
+
+            // Change Account button functionality
+            changeAccountButton.addEventListener("click", () => {
+                // Clear stored credentials and redirect to the home page
+                localStorage.removeItem('username');
+                localStorage.removeItem('password');
+                localStorage.removeItem('platform'); // Clear platform selection
+
+                // Redirect to the platform selection page
+                window.location.href = "/";
+            });
+        });
+    </script>
+
+</body>
+
+</html>

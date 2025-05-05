@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Document</title>
+    <style>
+        *{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+        }
+
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            background:#333;
+        }
+        body.blur {
+            filter: blur(5px);
+            pointer-events: none;
+        }
+        .card{
+            position:relative;
+            width:350px;
+            min-height: 500px;
+            background: #fff;
+            transition: 0.5s;
+        }
+        .card .lines{
+            position: absolute;
+            inset: 0;
+            background: #000;
+            overflow: hidden;
+        }
+        .card .lines::before{
+            content: '';
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            width:600px;
+            height:120px;
+            background:linear-gradient(transparent,#45f3ff,#45f3ff,#45f3ff,transparent);
+            animation:animate 4s linear infinite;
+        }
+        @keyframes animate{
+            0%{
+                transform: translate(-50%,-50%) rotate(0deg);
+            }
+            100%{
+                transform: translate(-50%,-50%) rotate(360deg);
+            }
+        }
+        .card .lines::after{
+            content: '';
+            position:absolute;
+            inset:3px;
+            background:#292929;
+        }
+        .card .imgBx{
+            position:absolute;
+            top:-50px;
+            left:50%;
+            transform:translateX(-50%);
+            width:200px;
+            height:200px;
+            background: #000;
+            transition:0.5s;
+            z-index:10;
+            overflow:hidden;
+        }
+    .card .imgBx::before{
+        content: '';
+        position: absolute;
+        top:50%;
+        left:50%;
+        width:500px;
+        height:150px;
+        transform: translate(-50%,-50%);
+        background:linear-gradient(transparent,#ff3c7b,#ff3c7b,#ff3c7b,transparent);
+        animation:animate2 6s linear infinite;
+    }
+    @keyframes animate2{
+            0%{
+                transform: translate(-50%,-50%) rotate(360deg);
+            }
+            100%{
+                transform: translate(-50%,-50%) rotate(0deg);
+            }
+        }
+        .card .imgBx::after{
+        content: '';
+        position: absolute;
+        inset:3px;
+       background: #292929;
+    }
+    .card .imgBx img{
+        position: absolute;
+        top:10px;
+        left:10px;
+        z-index:1;
+        width:calc(100% - 20px);
+        height:calc(100% - 20px);
+    }
+    .card .content{
+        position: absolute;
+        width:100%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:flex-end;
+        overflow:hidden;
+    }
+    .card .content .details{
+        padding: 40px;
+        text-align: center;
+        width: 100%;
+        transition:0.5s;
+       
+    }
+
+    .card .content .details h2 {
+    font-size: 1.25em;
+    font-weight: 600;
+    color: #45f3ff;
+    line-height: 1.2em;
+    margin-bottom: 20px; /* Add space below the h2 */
+}
+
+.card .content .details h2 span {
+    font-size: 0.75em;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 10px; /* Add space between span and loading animation */
+}
+
+.loading-animation {
+    width: 40px;
+    height: 40px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid #45f3ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 135px -20px; /* Center and add space below the loading animation */
+}
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+    .card .content .terminal {
+            background: #222;
+            color: #0f0;
+            font-family: monospace;
+            padding: 10px;
+            height: 100px;
+            overflow-y: auto;
+            border-radius: 5px;
+            margin: 15px 0;
+            border: 2px solid #45f3ff;
+            position: relative;;
+        }
+    .card .content .details .actionBtn{
+        display: flex;
+        justify-content:space-between;
+        gap:20px;
+    }
+    .card .content .details .actionBtn button{
+        padding:10px 30px;
+        border:none;
+        outline:none;
+        border-radius:5px;
+        font-size:1em;
+        font-weight:500;
+        background: #45f3ff;
+        color:#222;
+        cursor:pointer;
+        opacity: 0.9;
+    }
+    .card .content .details .actionBtn button:nth-child(2){
+        background: #fff;
+    }
+    .card .content .details .actionBtn button:hover{
+        opacity:1;
+    }
+
+    .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 99998;
+            display: none;
+        }
+
+        .popup-overlay.show {
+            display: block;
+        }
+
+        #pdfPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 99999;
+        }
+
+        #popupForm {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #confirmButton {
+            padding: 10px 30px;
+            border: none;
+            outline: none;
+            border-radius: 25px; /* Makes the button pill-shaped */
+            font-size: 1em;
+            font-weight: 500;
+            background: #28a745; /* Green color */
+            color: white;
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+#confirmButton:hover {
+    opacity: 1;
+}
+#generatePdf:disabled{
+            background-color: #8d4848;
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="lines"></div>
+        <div class="imgBx">
+            <img src="/images/Clipped_image_20230529_200641_remastered.png" alt="">
+        </div>
+        <div class="content">
+            <div class="details">
+                <div><h2>NightWolf <br> <span>nightwolf@gmail.com</span></h2></div>
+                <div class="loading-animation"></div>
+                <div class="terminal" id="terminal">
+                    <!-- Terminal messages will be displayed here -->
+                </div>
+                <div class="actionBtn">
+                    <button id="generatePdf"><i class="bi bi-file-earmark-arrow-down"></i> Generate PDF</button>
+                    <button><i class="bi bi-person-circle"></i> Change Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popupOverlay" class="popup-overlay"></div>
+    <div id="pdfPopup">
+        <h3>Select or Add Features</h3>
+        <form id="popupForm">
+            <div class="form-item">
+                <input type="checkbox" id="filterCheckbox" name="filter">
+                <label for="filterCheckbox"><i class="bi bi-filter"></i> Filter</label>
+            </div>
+            <div id="filterInputContainer" style="display: none;">
+                <label for="filterText">Enter Filter:</label>
+                <input type="text" id="filterText" name="filterText">
+            </div>
+            <div class="form-item">
+                <input type="checkbox" id="summaryCheckbox" name="summary">
+                <label for="summaryCheckbox"><i class="bi bi-card-text"></i> Summary</label>
+            </div>
+            <button type="button" id="confirmButton"><i class="bi bi-check-circle"></i> Confirm</button>
+        </form>
+    </div>
+    <script>
+        
+      const generatePdfButton = document.getElementById('generatePdf');
+      generatePdfButton.disabled = true;
+      
+        const pdfPopup = document.getElementById('pdfPopup');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const filterCheckbox = document.getElementById('filterCheckbox');
+        const filterInputContainer = document.getElementById('filterInputContainer');
+        const confirmButton = document.getElementById('confirmButton');
+        
+
+        generatePdfButton.addEventListener('click', () => {
+            pdfPopup.style.display = 'block';
+            popupOverlay.classList.add('show');
+        });
+
+        filterCheckbox.addEventListener('change', () => {
+            filterInputContainer.style.display = filterCheckbox.checked ? 'block' : 'none';
+        });
+
+        confirmButton.addEventListener('click', () => {
+            pdfPopup.style.display = 'none';
+            popupOverlay.classList.remove('show');
+        });
+    
+        // Example JavaScript for Terminal
+  const terminal = document.getElementById('terminal');
+const messages = ["Welcome to NightWolf!", "New follower: @john_doe", "You have 3 new messages.", "2323", "3", "656"];
+const detailsSection = document.querySelector('.details');
+const loadingAnimation = document.querySelector('.loading-animation');
+messages.forEach((message, index) => {
+    setTimeout(() => {
+        const p = document.createElement('p');
+        p.textContent = message;
+        p.style.textAlign = 'left';
+        terminal.appendChild(p);
+        terminal.scrollTop = terminal.scrollHeight;
+
+        // Hide loading animation when all messages are displayed
+        if (index === messages.length - 1) {
+            loadingAnimation.style.display = 'none';
+            generatePdfButton.disabled = false;
+        }
+    }, index * 2000);
+});
+    </script>
+</body>
+</html>
