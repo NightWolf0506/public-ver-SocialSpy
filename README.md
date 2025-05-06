@@ -2,7 +2,7 @@
 
 **SocialSpy** is a social media profile web scraping application. It supports:
 
-- 🖥️ **Desktop Application** (Flask-based UI)
+- 🖥️ **Desktop Application** (Custom Tkinter-based UI)
 - 🌐 **Web-based Flask App**
 - 💻 **Direct JavaScript Version**
 
